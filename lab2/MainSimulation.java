@@ -7,11 +7,11 @@ public class MainSimulation extends Global{
     public static void main(String[] args) throws IOException {
 		Gen Generator = new Gen();
 		
-			Generator.lambda = 45;
-			int queuesNbr = 5;
+		Generator.lambda = 45;
+		int queuesNbr = 5;
 
-    	Signal actSignal;
-    	new SignalList();
+    		Signal actSignal;
+    		new SignalList();
 
 		List<QS> qList = new ArrayList<QS>();
 		for (int i = 0; i < queuesNbr; i++) {
