@@ -24,11 +24,11 @@ public class MainSimulation extends Global{
 		}
 
 		while (time < 100000){
-			Generator.sendTo = qList.get(0);
+		Generator.sendTo = qList.get(0);
     		actSignal = SignalList.FetchSignal();
     		time = actSignal.arrivalTime;
     		actSignal.destination.TreatSignal(actSignal);
-			qList.sort((q1, q2) -> (q1.numberInQueue - q2.numberInQueue));
+		qList.sort((q1, q2) -> (q1.numberInQueue - q2.numberInQueue));
     		} 
 		
 		System.out.println();
