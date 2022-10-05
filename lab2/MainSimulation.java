@@ -15,6 +15,7 @@ public class MainSimulation extends Global{
 
 		List<QS> qList = new ArrayList<QS>(queuesNbr);
 		SignalList.SendSignal(READY, Generator, time);
+		
 		for (int i = 0; i < queuesNbr; i++) {
 			qList.add(i, new QS());
 			SignalList.SendSignal(MEASURE, qList.get(i), time);
