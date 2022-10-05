@@ -1,44 +1,87 @@
 import java.util.*;
 import java.io.*;
 
-//Denna klass ärver Global så att man kan använda time och signalnamnen utan punktnotation
-
 
 public class MainSimulation extends Global{
 
     public static void main(String[] args) throws IOException {
-
-    	//Signallistan startas och actSignal deklareras. actSignal är den senast utplockade signalen i huvudloopen nedan.
+		Gen Generator = new Gen();
+		
+		Generator.lambda = 45;
+		int queuesNbr = 5;
 
     	Signal actSignal;
     	new SignalList();
 
-    	//Här nedan skapas de processinstanser som behövs och parametrar i dem ges värden.
+		Map<String, QS> qMap = new TreeMap<String, QS>();
+		for (int i = 0; i < queuesNbr; i++) {
+			qMap.put("Q"+(1+i), new QS());
+		}
 
-    	QS Q1 = new QS();
-    	Q1.sendTo = null;
+		List<Map.Entry<String, QS>> qList = new ArrayList<>(qMap.entrySet());
 
-    	Gen Generator = new Gen();
-    	Generator.lambda = 9; //Generator ska generera nio kunder per sekund
-    	Generator.sendTo = Q1; //De genererade kunderna ska skickas till kösystemet QS
+		SignalList.SendSignal(READY, Generator, time);
+		for (int i = 0; i < queuesNbr; i++) {
+			SignalList.SendSignal(MEASURE, qList.get(i).getValue(), time);
+		}
 
-    	//Här nedan skickas de första signalerna för att simuleringen ska komma igång.
-
-    	SignalList.SendSignal(READY, Generator, time);
-    	SignalList.SendSignal(MEASURE, Q1, time);
-
-
-    	// Detta är simuleringsloopen:
-
-    	while (time < 100000){
+		while (time < 100000){
+			Generator.sendTo = qList.get(0).getValue();
     		actSignal = SignalList.FetchSignal();
     		time = actSignal.arrivalTime;
     		actSignal.destination.TreatSignal(actSignal);
-    	}
+			qList.sort((q1, q2) -> (q1.getValue().numberInQueue - q2.getValue().numberInQueue));
+    	} 
 
-    	//Slutligen skrivs resultatet av simuleringen ut nedan:
+		System.out.println();
+		for (int i = 0; i < queuesNbr; i++) {
+			System.out.println("Medelantalet kunder i kösystem " + (i+1) + ": " + 1.0*qList.get(i).getValue().accumulated/qList.get(i).getValue().noMeasurements);
+		}
+		System.out.println();
 
-    	System.out.println("Medelantal kunder i kösystem: " + 1.0*Q1.accumulated/Q1.noMeasurements);
 
-    }
+		/** UPPGIFT 1e) 
+		 * 		Generator.lambda = 8;
+		 *		int queuesNbr = 3;
+		Generator.sendTo = qList.get(0).getValue();
+		qList.get(0).getValue().sendTo = qList.get(1).getValue();
+		qList.get(1).getValue().sendTo = qList.get(2).getValue();
+
+		*/
+
+		/** KÖSYSTEM VÄLJS PÅ SLUMP
+		Random rand = new Random();
+		while (time < 100000){
+			Generator.sendTo = qList.get(rand.nextInt(5)).getValue();
+    		actSignal = SignalList.FetchSignal();
+    		time = actSignal.arrivalTime;
+    		actSignal.destination.TreatSignal(actSignal);
+    	}  */
+
+		/** KÖSYSTEM VÄLJS EN EFTER EN
+		int q = 0;
+		while (time < 100000){
+			Generator.sendTo = qList.get(q).getValue();
+    		actSignal = SignalList.FetchSignal();
+    		time = actSignal.arrivalTime;
+    		actSignal.destination.TreatSignal(actSignal);
+			q++;
+			if (q > 4) {
+				q = 0;
+			}
+    	}  */
+
+		
+		/** KÖSYSTEM VÄLJS EFTER DEN SOM HAR MINST JOBB
+		while (time < 100000){
+			Generator.sendTo = qList.get(0).getValue();
+    		actSignal = SignalList.FetchSignal();
+    		time = actSignal.arrivalTime;
+    		actSignal.destination.TreatSignal(actSignal);
+			qList.sort((q1, q2) -> (q1.getValue().numberInQueue - q2.getValue().numberInQueue));
+    	} */
+
+
+
+	}
 }

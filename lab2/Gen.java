@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 //Denna klass ärver Proc, det gör att man kan använda time och signalnamn utan punktnotation
 
@@ -21,4 +20,6 @@ class Gen extends Proc{
 				break;
 		}
 	}
+
+
 }
