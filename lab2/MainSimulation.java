@@ -7,8 +7,8 @@ public class MainSimulation extends Global{
     public static void main(String[] args) throws IOException {
 		Gen Generator = new Gen();
 		
-		Generator.lambda = 45;
-		int queuesNbr = 5;
+			Generator.lambda = 45;
+			int queuesNbr = 5;
 
     	Signal actSignal;
     	new SignalList();
@@ -29,7 +29,7 @@ public class MainSimulation extends Global{
     		time = actSignal.arrivalTime;
     		actSignal.destination.TreatSignal(actSignal);
 			qList.sort((q1, q2) -> (q1.numberInQueue - q2.numberInQueue));
-    	} 
+    		} 
 		
 		System.out.println();
 		for (int i = 0; i < queuesNbr; i++) {
@@ -58,7 +58,7 @@ public class MainSimulation extends Global{
     		actSignal = SignalList.FetchSignal();
     		time = actSignal.arrivalTime;
     		actSignal.destination.TreatSignal(actSignal);
-    	} */
+    		} */
 
 		/** KÖSYSTEM VÄLJS EN EFTER EN
 		int q = 0;
@@ -71,7 +71,7 @@ public class MainSimulation extends Global{
 			if (q > 4) {
 				q = 0;
 			}
-    	}  */
+    		}  */
 
 		/** KÖSYSTEM VÄLJS EFTER DEN SOM HAR MINST JOBB
 		while (time < 100000){
@@ -80,7 +80,7 @@ public class MainSimulation extends Global{
     		time = actSignal.arrivalTime;
     		actSignal.destination.TreatSignal(actSignal);
 			qList.sort((q1, q2) -> (q1.numberInQueue - q2.numberInQueue));
-    	} */
+    		} */
 
 
 
