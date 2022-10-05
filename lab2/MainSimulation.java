@@ -14,12 +14,9 @@ public class MainSimulation extends Global{
     		new SignalList();
 
 		List<QS> qList = new ArrayList<QS>(queuesNbr);
-		for (int i = 0; i < queuesNbr; i++) {
-			qList.add(i, new QS());
-		}
-
 		SignalList.SendSignal(READY, Generator, time);
 		for (int i = 0; i < queuesNbr; i++) {
+			qList.add(i, new QS());
 			SignalList.SendSignal(MEASURE, qList.get(i), time);
 		}
 
@@ -31,11 +28,11 @@ public class MainSimulation extends Global{
 		qList.sort((q1, q2) -> (q1.numberInQueue - q2.numberInQueue));
     		} 
 		
-		System.out.println();
+
 		for (int i = 0; i < queuesNbr; i++) {
 			System.out.println("Medelantalet kunder i kösystem " + (i+1) + ": " + 1.0*qList.get(i).accumulated/qList.get(i).noMeasurements);
 		}
-		System.out.println();
+		
 
 
 		
