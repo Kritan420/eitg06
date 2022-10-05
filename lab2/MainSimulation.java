@@ -13,7 +13,7 @@ public class MainSimulation extends Global{
     		Signal actSignal;
     		new SignalList();
 
-		List<QS> qList = new ArrayList<QS>();
+		List<QS> qList = new ArrayList<QS>(queuesNbr);
 		for (int i = 0; i < queuesNbr; i++) {
 			qList.add(i, new QS());
 		}
@@ -48,6 +48,11 @@ public class MainSimulation extends Global{
 		Generator.sendTo = qList.get(0);
 		qList.get(0).sendTo = qList.get(1);
 		qList.get(1).sendTo = qList.get(2);
+				while (time < 100000){
+    		actSignal = SignalList.FetchSignal();
+    		time = actSignal.arrivalTime;
+    		actSignal.destination.TreatSignal(actSignal);
+    		} 
 
 		*/
 
