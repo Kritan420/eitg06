@@ -28,7 +28,6 @@ public class MainSimulation extends Global{
 		qList.sort((q1, q2) -> (q1.numberInQueue - q2.numberInQueue));
     		} 
 		
-
 		for (int i = 0; i < queuesNbr; i++) {
 			System.out.println("Medelantalet kunder i kösystem " + (i+1) + ": " + 1.0*qList.get(i).accumulated/qList.get(i).noMeasurements);
 		}
