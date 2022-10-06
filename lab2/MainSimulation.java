@@ -4,6 +4,10 @@ import java.io.*;
 
 public class MainSimulation extends Global{
 
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
 		
 		Gen Generator = new Gen();
@@ -14,7 +18,7 @@ public class MainSimulation extends Global{
     		Signal actSignal;
     		new SignalList();
 
-		List<QS> qList = new ArrayList<QS>(queuesNbr);
+		List<QS> qList = new ArrayList<>(queuesNbr);
 		SignalList.SendSignal(READY, Generator, time);
 
 		for (int i = 0; i < queuesNbr; i++) {
